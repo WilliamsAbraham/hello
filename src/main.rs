@@ -3,22 +3,39 @@ use rand::Rng;
 use std::cmp::Ordering;
 fn main() {
     
+     loop
+     {
+        println!("please input you guess. ");
+        let secret = rand::thread_rng().gen_range(1..=3);
+        let mut guess = String::new();
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("failed to read");
+    
+            let guess: u32 = match guess.trim().parse()
+            {
+                Ok(num) => num,
+                Err(_) => 
+                {
+                    println!("Your input was invalid");
+                    continue;
+                }
+            };
 
-    println!("please input you guess. ");
-    let secret = rand::thread_rng().gen_range(1..=100);
-    let mut guess = String::new();
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("failed to read");
+        match guess.cmp(&secret)    
+        {
+            Ordering::Less => println!("too small"),
+            Ordering::Greater => println!("Too big"),
+            Ordering::Equal => {
+                println!("You won");
+                break;
+            }
+        };
 
-        let guess: u32 = guess.trim().parse().expect("Please input a valid number");
+        println!("You guessed: {guess}");
+        println!("The answer is: {} =====> You guessed :{1}",secret,guess);
 
-    println!("You guessed: {guess}");
-    match guess.cmp(&secret)
-    {
-        Ordering::Less => println!("too small"),
-        Ordering::Greater => println!("Too big"),
-        Ordering::Equal => println!("You won"),
-    }
+     }
+   
 
 }
